@@ -1,15 +1,13 @@
 from owlready2 import *
+import utils as uls
 
 
 
 def getOntologyClasses():
 
     query = """SELECT * { ?x a owl:Class . FILTER(ISIRI(?x)) }"""
+    return uls.executeQuery(query, [])
 
-    ontologyEntities = list(default_world.sparql(query))
-    ontologyEntities = [str(entity) for entityList in ontologyEntities for entity in entityList]
-
-    return ontologyEntities
 
 def getEntityWithName(entityName):
 
@@ -19,9 +17,7 @@ def getEntityWithName(entityName):
             ?touristicPlace rdfs:label ??.
         }
     """
-
-    entity = list(default_world.sparql(query, [entityName]))    
-    return [str(entity) for entityList in entity for entity in entityList]
+    return uls.executeQuery(query, [entityName])
 
 
 def getTouristicPlaceByValueInName(value):
@@ -30,14 +26,13 @@ def getTouristicPlaceByValueInName(value):
         PREFIX base: <file:///c:/Users/mcm23/OneDrive/Desktop/WSLD/ontology.rdf#>
         SELECT ?label
         WHERE {
-            ?touristicSite rdfs:label ?label .
-            ?touristicSite owl:Class "TouristicPlace" . 
+            ?touristicSite a <http://example.org/TouristicPlace> .
+            ?touristicSite rdfs:label ?label . 
             FILTER (CONTAINS(UCASE(?label), UCASE(??)))
         }
     """
 
-    entity = list(default_world.sparql(query, [value]))
-    return [str(entity) for entityList in entity for entity in entityList]
+    return uls.executeQuery(query, [value])
 
 
 def getLocalIsLocatedInParish(parishName):
@@ -46,28 +41,29 @@ def getLocalIsLocatedInParish(parishName):
         PREFIX base: <file:///c:/Users/mcm23/OneDrive/Desktop/WSLD/ontology.rdf#>
         SELECT ?label 
         WHERE {
+            ?touristicSite a <http://example.org/TouristicPlace> .
             ?touristicSite rdfs:label ?label .
             ?touristicSite base:locateInParish ??
         }
     """
 
-    entities = list(default_world.sparql(query, [parishName]))
-    return [str(entity) for entityList in entities for entity in entityList]
+    return uls.executeQuery(query, [parishName])
 
 
-def getLocalIsLocatedInParish(cityName):
 
-    query = """
-        PREFIX base: <file:///c:/Users/mcm23/OneDrive/Desktop/WSLD/ontology.rdf#>
-        SELECT ?label 
-        WHERE {
-            ?touristicSite rdfs:label ?label .
-            ?touristicSite base:locateInCity ??
-        }
-    """
-
-    entities = list(default_world.sparql(query, [cityName]))
-    return [str(entity) for entityList in entities for entity in entityList]
+#def getLocalIsLocatedInCity(cityName):
+#
+#    query = """
+#        PREFIX city: <file:///g:/Il%20mio%20Drive/Universit%C3%A0/Magistrale/II%20Anno/I%20Semestre/Semantic%20Web%20%26%20Linked%20Data/.Project/ontology.rdf#>
+#        SELECT ?label 
+#        WHERE {
+#            ?touristicSite a <http://example.org/TouristicPlace> .
+#            ?touristicSite rdfs:label ?label .
+#            ?touristicSite city:locatedInCity ?? .
+#        }
+#    """
+#    
+#    return uls.executeQuery(query, [cityName])
 
 
 def getPlaceIsOpen():
@@ -76,13 +72,13 @@ def getPlaceIsOpen():
         PREFIX base: <file:///c:/Users/mcm23/OneDrive/Desktop/WSLD/ontology.rdf#>
         SELECT ?label ?openingHours
         WHERE {
+            ?touristicSite a <http://example.org/TouristicPlace> .
             ?touristicSite rdfs:label ?label .
             ?touristicSite base:hasOpeningHours ?openingHours
         }
     """
 
-    entities = list(default_world.sparql(query))
-    return [str(entity) for entityList in entities for entity in entityList]
+    return uls.executeQuery(query, [])
 
 def getPlaceRating():
 
@@ -90,13 +86,13 @@ def getPlaceRating():
         PREFIX base: <file:///c:/Users/mcm23/OneDrive/Desktop/WSLD/ontology.rdf#>
         SELECT ?label ?openingHours
         WHERE {
+            ?touristicSite a <http://example.org/TouristicPlace> .
             ?touristicSite rdfs:label ?label .
             ?touristicSite base:hasOpeningHours ?hasRating
         }
     """
 
-    entities = list(default_world.sparql(query))
-    return [str(entity) for entityList in entities for entity in entityList]
+    return uls.executeQuery(query, [])
 
 
 #place is open

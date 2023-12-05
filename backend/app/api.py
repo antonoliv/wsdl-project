@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 sys.path.append('./app/queries')
 
-from ontology import getEntityWithName, getEntityByValueInName, getOntologyClasses
+from ontology import getEntityWithName, getEntityByValueInName, getOntologyClasses, getEntitiesByCity
 
 
 app = FastAPI()
@@ -39,4 +39,10 @@ async def get_entity_with_name(entityName):
 async def get_entity_by_value(value):
 
     data = getEntityByValueInName(value)
+    return {"message" : data}
+
+@app.get("/entities_city/{cityName}", tags=["value"])
+async def get_entity_by_city(cityName):
+
+    data = getEntitiesByCity(cityName)
     return {"message" : data}

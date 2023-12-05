@@ -30,3 +30,10 @@ def getEntityByValueInName(value):
 
     return {"data":entities, "code":200}
 
+
+def getEntitiesByCity(value):
+
+    entities = q.getLocalIsLocatedInCity(value)
+
+    return {"data":entities, "code":200}
+
