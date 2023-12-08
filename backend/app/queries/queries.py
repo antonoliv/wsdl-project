@@ -24,10 +24,11 @@ def getTouristicPlaceByValueInName(value):
 
     query = """
         PREFIX base: <file:///c:/Users/mcm23/OneDrive/Desktop/WSLD/ontology.rdf#>
+        PREFIX tplace: <http://example.org/>
         SELECT ?label
         WHERE {
-            ?touristicSite a <http://example.org/TouristicPlace> .
-            ?touristicSite rdfs:label ?label . 
+            ?touristicSite a tplace:TouristicPlace.
+            ?touristicSite rdfs:label ?label .
             FILTER (CONTAINS(UCASE(?label), UCASE(??)))
         }
     """
@@ -39,14 +40,14 @@ def getLocalIsLocatedInParish(parishName):
 
     query = """
         PREFIX base: <file:///c:/Users/mcm23/OneDrive/Desktop/WSLD/ontology.rdf#>
-        SELECT ?label 
+        SELECT ?label ?id
         WHERE {
             ?touristicSite a <http://example.org/TouristicPlace> .
+            ?touristicSite rdf:Description ?id 
             ?touristicSite rdfs:label ?label .
             ?touristicSite base:locateInParish ??
         }
     """
-
     return uls.executeQuery(query, [parishName])
 
 

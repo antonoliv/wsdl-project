@@ -6,8 +6,6 @@ import sys
 
 
 onto = get_ontology("file://app/ontology/updated_ontology.rdf").load()
-namespace = get_namespace("file://app/ontology/")
-
 
 def getOntologyClasses():
 
