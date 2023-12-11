@@ -1,36 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import Image from 'react-bootstrap/Image';
+import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/esm/Button';
 
-function TouristicPlaces(props) {
+import placeholder from './placeholder.webp'
 
-    const [id, setId] = useState(-1)
+const ImageStyle = {
+    objectFit: "cover", 
+    width: "100%", 
+    height: "200px", 
+    borderRadius: "15px" 
+}
+
+function TouristicPlaces(sites) {
 
     return (
-        <Row className="justify-content-start ms-1" xs="1" md="2" lg="3">
-            {props.places && (
-                props.places.map((place, index) => (
+        <>
+            {sites && (
+                sites.places.map((site, index) => (
                     <Col key={index} className='mb-3' >
-                        <a className="text-decoration-none" href={`/touristic_place/${id}`}>
+                        <a className="text-decoration-none" href={`/site/${site.id}`}>
                             <Card className="border-0">
-                                <Card.Img src={place} style={{ objectFit: "cover", width: "100%", height: "200px", borderRadius: "15px"}} />
+                                { site.picture !== "" ? <Card.Img src={site.picture} style={ImageStyle} /> :
+                                <Card.Img src={placeholder} style={{ objectFit: "cover", width: "100%", height: "200px", borderRadius: "15px" }} />}
                                 <Card.Body style={{ paddingLeft: "0" }}>
-                                    <Card.Title><h5 className="fw-bold">Touristic Place Name</h5></Card.Title>
-                                    <Card.Text>
-                                        <h6 className="fw-light">Some quick example text to build</h6>
-                                    </Card.Text>
+                                    <Card.Title><h5 className="fw-bold">{site.name}</h5></Card.Title>
                                 </Card.Body>
                             </Card>
                         </a>
                     </Col>
                 ))
             )}
-        </Row>
+        </>
     )
 }
 

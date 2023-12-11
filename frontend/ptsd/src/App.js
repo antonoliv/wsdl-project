@@ -15,7 +15,7 @@ function App() {
         <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/map" element={<Map />} />
-            <Route path="/touristic_place/:id" element={<TouristicPlace />} />
+            <Route path="/site/:id" element={<TouristicPlace/>} />
         </Routes>
     </BrowserRouter>
   );
